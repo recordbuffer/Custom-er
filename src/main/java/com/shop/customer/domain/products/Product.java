@@ -1,6 +1,7 @@
 package com.shop.customer.domain.products;
 
 import com.shop.customer.domain.Category;
+import com.shop.customer.domain.OrderProducts;
 import com.shop.customer.domain.eums.ProductStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,5 +39,8 @@ public abstract class Product {
 
     @UpdateTimestamp
     private Timestamp updatedDateTime;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderProducts> productsList = new ArrayList<>();
 
 }
