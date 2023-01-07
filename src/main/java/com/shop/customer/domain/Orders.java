@@ -1,5 +1,6 @@
 package com.shop.customer.domain;
 
+import com.shop.customer.Delivery;
 import com.shop.customer.domain.eums.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,4 +23,7 @@ public class Orders {
 
     @OneToMany(mappedBy = "order")
     private List<OrderProducts> productsList = new ArrayList<>();
+
+    @OneToOne
+    private Delivery delivery;
 }
