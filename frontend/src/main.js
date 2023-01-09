@@ -1,20 +1,21 @@
 import Vue from 'vue'
-import App from './App.vue'
-import {createRouter, createWebHistory} from 'vue-router'
+import App from './App'
+import VueRouter from 'vue-router';
 import Home from "@/pages/Home";
-import Login from "@/pages/Login";
+import Signup from "@/pages/Signup";
 
 const routes = [
   {path: '/', component: Home},
-  {path: '/login', component: Login}
+  {path: '/signup', component: Signup}
 ]
 
-const router = createRouter({
-  history: createWebHistory(),
+Vue.use(VueRouter);
+const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
 new Vue({
   router,
-  render: h => h(App),
+  render: h => h(App)
 }).$mount('#app')
