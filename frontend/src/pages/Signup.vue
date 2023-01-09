@@ -29,10 +29,9 @@
               </div>
             </div>
             <div class="form-group d-flex justify-content-center">
-<!--              <a class="btn btn-block g-button" href="#">Sign up with Google</a>-->
-              <img class="bi me-2" width="55" height="55" src="../assets/naver2.png" />
-              <img class="bi me-2" width="55" height="55" src="../assets/kakao2.png" />
-              <img class="bi me-2" width="55" height="55" src="../assets/google2.png" />
+              <img class="bi me-2" width="55" height="55" src="../assets/naver.png" @click="naverLogin()" />
+              <img class="bi me-2" width="55" height="55" src="../assets/kakao.png" @click="kakaoLogin()" />
+              <img class="bi me-2" width="55" height="55" src="../assets/google.png" @click="googleLogin()" />
             </div>
           </form>
         </div>
@@ -42,7 +41,23 @@
 
 <script>
 export default {
-
+  methods: {
+    naverLogin() {
+      this.$axios.get('/api/user/oauth2/authorization/naver').then(res => {
+        alert(res.data)
+      })
+    },
+    kakaoLogin() {
+      this.$axios.get('/api/user/oauth2/authorization/kakao').then(res => {
+        alert(res.data)
+      })
+    },
+    googleLogin() {
+      this.$axios.get('/api/user/oauth2/authorization/google').then(res => {
+        alert(res.data)
+      })
+    }
+  }
 }
 </script>
 
