@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App'
-import Home from "@/pages/Home";
 import VueRouter from 'vue-router';
+import Home from "@/pages/Home";
 import Signup from "@/pages/Signup";
 
 const routes = [
