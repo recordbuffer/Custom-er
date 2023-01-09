@@ -1,11 +1,10 @@
 <template>
-  <footer class="text-muted py-5">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
     <div class="container">
       <p class="float-end mb-1">
         <a href="#">Back to top</a>
       </p>
-      <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-      <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.3/getting-started/introduction/">getting started guide</a>.</p>
+      <p class="col-md-4 mb-0 text-muted">&copy; 2022 Company, Inc</p>
     </div>
   </footer>
 </template>
