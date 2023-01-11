@@ -1,12 +1,31 @@
 package com.shop.customer.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.shop.customer.domain.Users;
+import com.shop.customer.repository.UserRepository;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+
+    private final UserRepository repository;
+
+    public UserController(UserRepository repository) {
+        this.repository = repository;
+    }
+
+
+    @PostMapping("/login")
+    public Long login(@RequestBody Map<String, String> loginForm) {
+        Users user = repository.findByEmailAndPassword(loginForm.get("email"), loginForm.get("password"));
+
+        if(user!=null) {
+            return user.getId();
+        }
+        return 0L;
+    }
 
     @GetMapping("/oauth2/authorization/naver")
     public String naverButton() {

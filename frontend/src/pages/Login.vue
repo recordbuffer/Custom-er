@@ -2,25 +2,22 @@
   <div class="container">
     <div class="col-md-6 mx-auto text-center">
       <div class="header-title">
-        <h1 class="wv-heading--title">회원가입</h1>
+        <h1 class="wv-heading--title">로그인</h1>
         <h2 class="wv-heading--subtitle">Make YourSelf Custom-er</h2>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4 mx-auto">
         <div class="myform form ">
-          <form action="" method="post" name="signup">
+          <form name="login">
             <div class="form-group">
-              <input type="text" name="name"  class="form-control my-input" id="name" placeholder="이름">
+              <input type="email" name="email"  class="form-control my-input" id="email" autocomplete="on" placeholder="이메일" v-model="email">
             </div>
             <div class="form-group">
-              <input type="email" name="email"  class="form-control my-input" id="email" placeholder="이메일">
-            </div>
-            <div class="form-group">
-              <input type="password" name="password"  class="form-control my-input" id="password" placeholder="비밀번호">
+              <input type="password" name="password"  class="form-control my-input" id="password" autocomplete="on" placeholder="비밀번호" v-model="password">
             </div>
             <div class="text-center ">
-              <button type="submit" class=" btn btn-block send-button tx-tfm">가입하기</button>
+              <button type="submit" class=" btn btn-block send-button tx-tfm" @click="submitLoginForm">로그인</button>
             </div>
             <div class="col-md-12 ">
               <div class="login-or">
@@ -41,7 +38,26 @@
 
 <script>
 export default {
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
   methods: {
+    submitLoginForm() {
+      const loginForm = {
+        email: this.email,
+        password: this.password
+      }
+      this.$axios.post('/api/user/login', loginForm).then(res => {
+        console.log("OK");
+        console.log(res.data);
+        alert(res.data);
+      }).catch(function (error) {
+        console.log(error);
+      })
+    },
     naverLogin() {
       this.$axios.get('/api/user/oauth2/authorization/naver').then(res => {
         alert(res.data)
