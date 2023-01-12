@@ -24,8 +24,8 @@
         </ul>
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-outline-light" style="background-color: #FC5030">Sign-up</button>
+          <button type="button" class="btn btn-outline-light me-2" @click="$router.push('/login')">로그인</button>
+          <button type="button" class="btn btn-outline-light" style="background-color: #FC5030" @click="$router.push('/signup')">회원가입</button>
         </div>
       </div>
     </div>
