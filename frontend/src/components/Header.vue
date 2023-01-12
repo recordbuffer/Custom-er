@@ -24,11 +24,11 @@
         </ul>
 
         <div class="text-end">
-          <div>
+          <div v-if="!$store.state.user.id">
             <router-link to="/login" class="btn btn-outline-light me-2">로그인</router-link>
             <router-link to="/signup" class="btn btn-outline-light" style="background-color: #FC5030">회원가입</router-link>
           </div>
-          <div>
+          <div v-else>
             <button type="button" class="btn btn-outline-light me-2" @click="logout()">로그아웃</button>
             <router-link to="/mypage" class="btn btn-outline-light" style="background-color: #FC5030">마이페이지</router-link>
           </div>
@@ -40,11 +40,14 @@
 
 <script>
 import router from "@/router";
+import store from "@/store";
 
 export default {
   methods: {
     logout() {
-      alert('로그아웃!');
+      store.commit('setUser',0);
+      sessionStorage.removeItem('id');
+      alert('로그아웃하였습니다.');
       router.push({path: '/'})
     }
   }

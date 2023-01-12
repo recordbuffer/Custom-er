@@ -2,7 +2,9 @@ package com.shop.customer.controller;
 
 import com.shop.customer.domain.Users;
 import com.shop.customer.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
@@ -23,7 +25,7 @@ public class UserController {
         if(user!=null) {
             return user.getId();
         }
-        return 0L;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/oauth2/authorization/naver")

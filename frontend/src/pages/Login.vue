@@ -37,6 +37,7 @@
 
 <script>
 import router from "@/router";
+import store from "@/store";
 
 export default {
   data() {
@@ -52,9 +53,12 @@ export default {
         password: this.password
       }
       this.$axios.post('/api/user/login', loginForm).then(res => {
-        console.log(res.data)
+        store.commit('setUser', res.data);
+        sessionStorage.setItem('id', res.data);
+        window.alert('로그인하였습니다');
         router.push({path:'/'})
-      }).catch(function () {
+      }).catch(()=> {
+        window.alert('로그인에 실패하였습니다.')
       })
     },
     naverLogin() {
