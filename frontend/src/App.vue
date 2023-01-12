@@ -9,11 +9,24 @@
 <script>
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import store from "@/store";
 export default {
   name: 'App',
   components: {
     Footer,
     Header
+  },
+  data() {
+    return{
+      id: ''
+    }
+  },
+  created() {
+    const id = sessionStorage.getItem('id');
+
+    if(id) {
+      store.commit('setUser', id);
+    }
   }
 }
 </script>

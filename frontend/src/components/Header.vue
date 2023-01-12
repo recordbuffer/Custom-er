@@ -3,7 +3,7 @@
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <img class="bi me-2" width="90" height="40" src="../assets/logo.png" />
+          <img class="bi me-2" width="90" height="40" src="../assets/logo.png"/>
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -24,8 +24,14 @@
         </ul>
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2" @click="$router.push('/login')">로그인</button>
-          <button type="button" class="btn btn-outline-light" style="background-color: #FC5030" @click="$router.push('/signup')">회원가입</button>
+          <div v-if="!$store.state.user.id">
+            <router-link to="/login" class="btn btn-outline-light me-2">로그인</router-link>
+            <router-link to="/signup" class="btn btn-outline-light" style="background-color: #FC5030">회원가입</router-link>
+          </div>
+          <div v-else>
+            <button type="button" class="btn btn-outline-light me-2" @click="logout()">로그아웃</button>
+            <router-link to="/mypage" class="btn btn-outline-light" style="background-color: #FC5030">마이페이지</router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -33,8 +39,18 @@
 </template>
 
 <script>
+import router from "@/router";
+import store from "@/store";
+
 export default {
-  name: 'Header'
+  methods: {
+    logout() {
+      store.commit('setUser',0);
+      sessionStorage.removeItem('id');
+      alert('로그아웃하였습니다.');
+      router.push({path: '/'})
+    }
+  }
 }
 </script>
 
