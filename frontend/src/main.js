@@ -1,24 +1,9 @@
 import Vue from 'vue'
 import App from './App'
-import VueRouter from 'vue-router';
 import axios from "axios";
-import Home from "@/pages/Home";
-import Signup from "@/pages/Signup";
-import Login from "@/pages/Login";
+import router from "@/router";
 
-const routes = [
-  {path: '/', component: Home},
-  {path: '/signup', component: Signup},
-  {path: '/login', component: Login}
-]
-
-Vue.use(VueRouter);
 Vue.prototype.$axios = axios;
-
-const router = new VueRouter({
-  mode: 'history',
-  routes
-})
 
 new Vue({
   router,
