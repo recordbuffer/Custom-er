@@ -1,6 +1,7 @@
 package com.shop.customer.controller;
 
 import com.shop.customer.domain.Users;
+import com.shop.customer.domain.dtos.SignupForm;
 import com.shop.customer.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,12 @@ public class UserController {
             return user.getId();
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/signup")
+    public String signup(@RequestBody SignupForm signupForm) {
+        Users user = repository.save(signupForm.toEntity());
+        return user.getName();
     }
 
     @GetMapping("/oauth2/authorization/naver")
