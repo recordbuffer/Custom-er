@@ -8,40 +8,61 @@
     </div>
     <div class="row">
       <div class="col-md-4 mx-auto">
-        <div class="myform form ">
-          <form action="" method="post" name="signup">
-            <div class="form-group">
-              <input type="text" name="name"  class="form-control my-input" id="name" placeholder="이름">
+        <form name="signup" @submit.prevent="submitSignupForm">
+          <div class="form-group">
+            <input type="text" name="name"  class="form-control my-input" id="name" placeholder="이름" v-model="name">
+          </div>
+          <div class="form-group">
+            <input type="email" name="email"  class="form-control my-input" id="email" placeholder="이메일" v-model="email">
+          </div>
+          <div class="form-group">
+            <input type="password" name="password"  class="form-control my-input" id="password" placeholder="비밀번호" v-model="password">
+          </div>
+          <div class="text-center ">
+            <button type="submit" class=" btn btn-block send-button tx-tfm">가입하기</button>
+          </div>
+          <div class="col-md-12 ">
+            <div class="login-or">
+              <hr class="hr-or">
+              <span class="span-or">or</span>
             </div>
-            <div class="form-group">
-              <input type="email" name="email"  class="form-control my-input" id="email" placeholder="이메일">
-            </div>
-            <div class="form-group">
-              <input type="password" name="password"  class="form-control my-input" id="password" placeholder="비밀번호">
-            </div>
-            <div class="text-center ">
-              <button type="submit" class=" btn btn-block send-button tx-tfm">가입하기</button>
-            </div>
-            <div class="col-md-12 ">
-              <div class="login-or">
-                <hr class="hr-or">
-                <span class="span-or">or</span>
-              </div>
-            </div>
-            <div class="form-group d-flex justify-content-center">
-              <img class="bi me-2" width="55" height="55" src="../assets/naver.png" @click="naverLogin()" />
-              <img class="bi me-2" width="55" height="55" src="../assets/kakao.png" @click="kakaoLogin()" />
-              <img class="bi me-2" width="55" height="55" src="../assets/google.png" @click="googleLogin()" />
-            </div>
-          </form>
-        </div>
+          </div>
+          <div class="form-group d-flex justify-content-center">
+            <img class="bi me-2" width="55" height="55" src="../assets/naver.png" @click="naverLogin()" />
+            <img class="bi me-2" width="55" height="55" src="../assets/kakao.png" @click="kakaoLogin()" />
+            <img class="bi me-2" width="55" height="55" src="../assets/google.png" @click="googleLogin()" />
+          </div>
+        </form>
       </div>
     </div>
   </div></template>
 
 <script>
+import router from "@/router";
+
 export default {
+  data() {
+    return {
+      name: '',
+      email: '',
+      password: ''
+    }
+  },
   methods: {
+    submitSignupForm() {
+      const signupForm = {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      }
+      this.$axios.post('/api/user/signup', signupForm).then(res => {
+        console.log(res.data)
+        window.alert('회원가입하였습니다');
+        router.push({path:'/'})
+      }).catch(()=> {
+        window.alert('회원가입에 실패하였습니다.')
+      })
+    },
     naverLogin() {
       this.$axios.get('/api/user/oauth2/authorization/naver').then(res => {
         alert(res.data)
