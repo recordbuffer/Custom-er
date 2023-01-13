@@ -2,8 +2,9 @@ package com.shop.customer.controller;
 
 import com.shop.customer.domain.Users;
 import com.shop.customer.domain.dtos.SignupForm;
-import com.shop.customer.repository.UserRepository;
+import com.shop.customer.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -13,26 +14,26 @@ import java.util.Map;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private final UserRepository repository;
+    private final UserService service;
 
-    public UserController(UserRepository repository) {
-        this.repository = repository;
+    public UserController(UserService service) {
+        this.service = service;
     }
+
 
     @PostMapping("/login")
     public Long login(@RequestBody Map<String, String> loginForm) {
-        Users user = repository.findByEmailAndPassword(loginForm.get("email"), loginForm.get("password"));
-
-        if(user!=null) {
-            return user.getId();
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return service.login(loginForm.get("email"), loginForm.get("password"));
     }
 
     @PostMapping("/signup")
-    public String signup(@RequestBody SignupForm signupForm) {
-        Users user = repository.save(signupForm.toEntity());
-        return user.getName();
+    public Long signup(@RequestBody SignupForm signupForm) {
+        return service.signup(signupForm);
+    }
+
+    @GetMapping("/signup/check/{email}/exists")
+    public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email) {
+        return ResponseEntity.ok(service.checkEmailExists(email));
     }
 
     @GetMapping("/oauth2/authorization/naver")
