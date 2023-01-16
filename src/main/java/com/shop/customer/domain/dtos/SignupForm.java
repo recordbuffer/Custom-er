@@ -17,11 +17,11 @@ public class SignupForm {
     @NotBlank(message = "비밀번호를 입력해주세요.")
     private String password;
 
-    public Users toEntity() {
+    public Users toEntity(String encPwd) {
         return Users.builder()
                 .name(name)
                 .email(email)
-                .password(password)
+                .password(encPwd)
                 .role(Role.USER)
                 .build();
     }

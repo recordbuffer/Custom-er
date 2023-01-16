@@ -49,15 +49,18 @@ export default {
   methods: {
     submitLoginForm() {
       const loginForm = {
-        email: this.email,
+        username: this.email,
         password: this.password
       }
-      this.$axios.post('/api/user/login', loginForm).then(res => {
-        store.commit('setUser', res.data);
-        sessionStorage.setItem('id', res.data);
-        window.alert('로그인하였습니다');
-        router.push({path:'/'})
-      }).catch(()=> {
+
+      this.$axios.get('/api/user/login', {auth: loginForm}).then(res => {
+        if (res.status === 200) {
+          store.commit('setUser', res.data);
+          sessionStorage.setItem('id', res.data);
+          window.alert('로그인하였습니다');
+          router.push({path:'/'})
+        }
+      }).catch(() => {
         window.alert('로그인에 실패하였습니다.')
       })
     },

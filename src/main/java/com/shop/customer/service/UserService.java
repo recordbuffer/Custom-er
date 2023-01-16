@@ -4,6 +4,7 @@ import com.shop.customer.domain.Users;
 import com.shop.customer.domain.dtos.SignupForm;
 import com.shop.customer.repository.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,10 +13,11 @@ import org.springframework.web.server.ResponseStatusException;
 @Transactional
 public class UserService {
 
+    private final BCryptPasswordEncoder encoder;
     private final UserRepository repository;
 
-
-    public UserService(UserRepository repository) {
+    public UserService(BCryptPasswordEncoder encoder, UserRepository repository) {
+        this.encoder = encoder;
         this.repository = repository;
     }
 
@@ -34,7 +36,9 @@ public class UserService {
             throw new IllegalArgumentException("이미 존재하는 유저입니다.");
         }
 
-        Users user = repository.save(signupForm.toEntity());
+        String encPwd = encoder.encode(signupForm.getPassword());
+
+        Users user = repository.save(signupForm.toEntity(encPwd));
 
         if(user!=null) {
             return user.getId();
