@@ -53,10 +53,11 @@ export default {
         password: this.password
       }
 
-      this.$axios.get('/api/user/login', {auth: loginForm}).then(res => {
+      this.$axios.post('/api/user/login', loginForm).then(res => {
         if (res.status === 200) {
-          store.commit('setUser', res.data);
-          sessionStorage.setItem('id', res.data);
+          console.log('res', res.data['accessToken'])
+          store.commit('setUser', res.data['accessToken']);
+          sessionStorage.setItem('access-token', res.data['accessToken']);
           window.alert('로그인하였습니다');
           router.push({path:'/'})
         }

@@ -46,7 +46,7 @@ export default {
   methods: {
     logout() {
       store.commit('setUser',0);
-      sessionStorage.removeItem('id');
+      sessionStorage.removeItem('access-token');
       alert('로그아웃하였습니다.');
       router.push({path: '/'})
     }
