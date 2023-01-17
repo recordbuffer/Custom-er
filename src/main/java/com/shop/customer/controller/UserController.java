@@ -1,10 +1,14 @@
 package com.shop.customer.controller;
 
+import com.shop.customer.config.dto.JwtToken;
+import com.shop.customer.config.dto.SessionUser;
 import com.shop.customer.domain.Users;
 import com.shop.customer.domain.dtos.SignupForm;
 import com.shop.customer.service.UserService;
+import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,10 +24,10 @@ public class UserController {
         this.service = service;
     }
 
-
     @PostMapping("/login")
-    public Long login(@RequestBody Map<String, String> loginForm) {
-        return service.login(loginForm.get("email"), loginForm.get("password"));
+    public ResponseEntity<JwtToken> loginSuccess(@RequestBody Map<String, String> loginForm) {
+        JwtToken token = service.login(loginForm.get("username"), loginForm.get("password"));
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/signup")
