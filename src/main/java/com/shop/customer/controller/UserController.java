@@ -5,7 +5,6 @@ import com.shop.customer.config.dto.SessionUser;
 import com.shop.customer.domain.Users;
 import com.shop.customer.domain.dtos.SignupForm;
 import com.shop.customer.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +14,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
     private final UserService service;
+
+    public UserController(UserService service) {
+        this.service = service;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<JwtToken> loginSuccess(@RequestBody Map<String, String> loginForm) {
