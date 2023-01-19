@@ -82,17 +82,19 @@ export default {
       })
     },
     naverLogin() {
-      this.$axios.get('/api/user/oauth2/authorization/naver').then(res => {
+      const url = 'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=O7pBQRvqh1pqErjzgFbr&state=STATE_STRING&redirect_uri=http://localhost:3001/login/oauth2/code/naver'
+      window.location.replace(url);
+      /*this.$axios.get('oauth2/authorization/naver').then(res => {
         alert(res.data)
-      })
+      })*/
     },
     kakaoLogin() {
-      this.$axios.get('/api/user/oauth2/authorization/kakao').then(res => {
+      this.$axios.get('oauth2/authorization/kakao').then(res => {
         alert(res.data)
       })
     },
     googleLogin() {
-      this.$axios.get('/api/user/oauth2/authorization/google').then(res => {
+      this.$axios.get('oauth2/authorization/google').then(res => {
         alert(res.data)
       })
     }
