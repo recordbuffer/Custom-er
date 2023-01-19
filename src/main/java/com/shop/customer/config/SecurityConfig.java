@@ -1,26 +1,22 @@
 package com.shop.customer.config;
 
-import com.shop.customer.config.auth.JwtAuthenticationFilter;
+import com.shop.customer.config.auth.CustomOauth2UserService;
 import com.shop.customer.config.auth.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
 
-    private final JwtTokenProvider jwtTokenProvider;
-
-    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+    private final CustomOauth2UserService customOauth2UserService;
 
 
     @Bean
@@ -39,7 +35,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
                 .authorizeRequests()
                 .antMatchers("/api/user").permitAll()
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .oauth2Login().userInfoEndpoint().userService(customOauth2UserService);
         return http.build();
     }
 }
