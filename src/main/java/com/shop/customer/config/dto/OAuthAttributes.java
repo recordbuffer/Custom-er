@@ -14,6 +14,7 @@ public class OAuthAttributes {
     private String nameAttributeKey;
     private String name;
     private String email;
+    private String provider;
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
         if("naver".equals(registrationId)) {
@@ -29,6 +30,7 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
+                .provider("Google")
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -40,18 +42,21 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
+                .provider("Naver")
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
 
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
-        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+        Map<String, Object> response = (Map<String, Object>) attributes.get("kakao_account");
+        Map<String, Object> account = (Map<String, Object>) response.get("profile");
 
         return OAuthAttributes.builder()
-                .name((String) response.get("profile_nickname"))
-                .email((String) response.get("account_email"))
-                .attributes(response)
+                .name((String) account.get("nickname"))
+                .email((String) response.get("email"))
+                .provider("Kakao")
+                .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
@@ -60,6 +65,7 @@ public class OAuthAttributes {
         return Users.builder()
                 .name(name)
                 .email(email)
+                .provider(provider)
                 .role(Role.USER)
                 .build();
     }
