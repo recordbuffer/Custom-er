@@ -1,27 +1,23 @@
 package com.shop.customer.config;
 
-import com.shop.customer.config.auth.JwtAuthenticationFilter;
-import com.shop.customer.config.auth.JwtTokenProvider;
+import com.shop.customer.config.auth.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
-    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
+    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
+        this.customOAuth2UserService = customOAuth2UserService;
     }
-
 
     @Bean
     public BCryptPasswordEncoder encoder() {
@@ -39,7 +35,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
                 .authorizeRequests()
                 .antMatchers("/api/user").permitAll()
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
         return http.build();
     }
 }
