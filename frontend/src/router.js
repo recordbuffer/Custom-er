@@ -5,12 +5,14 @@ import Home from "@/pages/Home";
 import Signup from "@/pages/Signup";
 import Login from "@/pages/Login";
 import Mypage from "@/pages/Mypage";
+import Products from "@/pages/Products";
 
 const routes = [
     {path: '/', component: Home},
     {path: '/signup', component: Signup},
     {path: '/login', component: Login},
-    {path: '/mypage', component: Mypage}
+    {path: '/mypage', component: Mypage},
+    {path: '/products', component: Products}
 ]
 
 Vue.use(VueRouter);
