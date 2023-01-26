@@ -1,6 +1,5 @@
-package com.shop.customer.config.auth;
+package com.shop.customer.config.jwt;
 
-import com.shop.customer.config.dto.JwtToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,30 +28,18 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(secretByteKey);
     }
 
-    public JwtToken generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
         //Access Token 생성
-        String accessToken = Jwts.builder()
+        return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
                 .setExpiration(new Date(System.currentTimeMillis()+ 1000 * 60 * 30))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-
-        //Refresh Token 생성
-        String refreshToken = Jwts.builder()
-                .setExpiration(new Date(System.currentTimeMillis()+ 1000 * 60 * 60 * 36))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-
-        return JwtToken.builder()
-                .grantType("Bearer")
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
     }
 
     public Authentication getAuthentication(String accessToken) {

@@ -1,6 +1,6 @@
-package com.shop.customer.config.security;
+package com.shop.customer.config.oauth;
 
-import com.shop.customer.config.dto.SessionUser;
+import com.shop.customer.config.oauth.dto.SessionUser;
 import com.shop.customer.domain.Users;
 import com.shop.customer.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

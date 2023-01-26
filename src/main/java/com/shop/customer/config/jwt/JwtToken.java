@@ -1,4 +1,4 @@
-package com.shop.customer.config.dto;
+package com.shop.customer.config.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
