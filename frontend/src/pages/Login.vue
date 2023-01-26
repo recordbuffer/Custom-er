@@ -25,9 +25,15 @@
             </div>
           </div>
           <div class="form-group d-flex justify-content-center">
-            <img class="bi me-2" width="55" height="55" src="../assets/naver.png" @click="naverLogin()" />
-            <img class="bi me-2" width="55" height="55" src="../assets/kakao.png" @click="kakaoLogin()" />
-            <img class="bi me-2" width="55" height="55" src="../assets/google.png" @click="googleLogin()" />
+            <a href="http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:3001/oauth2/redirect">
+            <img class="bi me-2" width="55" height="55" src="../assets/google.png" />
+            </a>
+            <a href="http://localhost:8080/oauth2/authorize/naver?redirect_uri=http://localhost:3001/oauth2/redirect">
+              <img class="bi me-2" width="55" height="55" src="../assets/naver.png" />
+            </a>
+            <a href="http://localhost:8080/oauth2/authorize/kakao?redirect_uri=http://localhost:3001/oauth2/redirect">
+              <img class="bi me-2" width="55" height="55" src="../assets/kakao.png" />
+            </a>
           </div>
         </form>
       </div>
@@ -55,29 +61,13 @@ export default {
 
       this.$axios.post('/api/user/login', loginForm).then(res => {
         if (res.status === 200) {
-          console.log('res', res.data['accessToken'])
-          store.commit('setUser', res.data['accessToken']);
-          sessionStorage.setItem('access-token', res.data['accessToken']);
+          store.commit('setToken', res.data)
+          sessionStorage.setItem('accessToken', res.data);
           window.alert('로그인하였습니다');
           router.push({path:'/'})
         }
       }).catch(() => {
         window.alert('로그인에 실패하였습니다.')
-      })
-    },
-    naverLogin() {
-      this.$axios.get('/api/user/oauth2/authorization/naver').then(res => {
-        alert(res.data)
-      })
-    },
-    kakaoLogin() {
-      this.$axios.get('/api/user/oauth2/authorization/kakao').then(res => {
-        alert(res.data)
-      })
-    },
-    googleLogin() {
-      this.$axios.get('/api/user/oauth2/authorization/google').then(res => {
-        alert(res.data)
       })
     }
   }
