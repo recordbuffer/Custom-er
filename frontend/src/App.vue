@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header/>
-    <Home/>
+    <RouterView/>
     <Footer/>
   </div>
 </template>
@@ -9,13 +9,24 @@
 <script>
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Home from "@/pages/Home";
+import store from "@/store";
 export default {
   name: 'App',
   components: {
-    Home,
     Footer,
     Header
+  },
+  data() {
+    return{
+      id: ''
+    }
+  },
+  created() {
+    const id = sessionStorage.getItem('id');
+
+    if(id) {
+      store.commit('setUser', id);
+    }
   }
 }
 </script>
