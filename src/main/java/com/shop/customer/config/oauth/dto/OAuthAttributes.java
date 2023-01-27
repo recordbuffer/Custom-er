@@ -1,4 +1,4 @@
-package com.shop.customer.config.dto;
+package com.shop.customer.config.oauth.dto;
 
 import com.shop.customer.domain.Users;
 import com.shop.customer.domain.eums.Role;

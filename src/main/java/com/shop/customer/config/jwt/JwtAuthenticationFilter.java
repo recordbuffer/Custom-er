@@ -1,4 +1,4 @@
-package com.shop.customer.config.auth;
+package com.shop.customer.config.jwt;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -6,13 +6,16 @@ import Signup from "@/pages/Signup";
 import Login from "@/pages/Login";
 import Mypage from "@/pages/Mypage";
 import Products from "@/pages/Products";
+import Redirect from "@/pages/Redirect";
 
 const routes = [
     {path: '/', component: Home},
     {path: '/signup', component: Signup},
     {path: '/login', component: Login},
     {path: '/mypage', component: Mypage},
-    {path: '/products', component: Products}
+    {path: '/products', component: Products},
+    {path: '/oauth2/redirect', component: Redirect},
+    {path: '/mypage', component: Mypage}
 ]
 
 Vue.use(VueRouter);

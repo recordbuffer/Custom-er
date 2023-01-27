@@ -24,7 +24,7 @@
         </ul>
 
         <div class="text-end">
-          <div v-if="!$store.state.user.id">
+          <div v-if="!$store.state.token">
             <router-link to="/login" class="btn btn-outline-light me-2">로그인</router-link>
             <router-link to="/signup" class="btn btn-outline-light" style="background-color: #FC5030">회원가입</router-link>
           </div>
@@ -45,8 +45,8 @@ import store from "@/store";
 export default {
   methods: {
     logout() {
-      store.commit('setUser',0);
-      sessionStorage.removeItem('access-token');
+      store.commit('setToken',null);
+      sessionStorage.removeItem('accessToken');
       alert('로그아웃하였습니다.');
       router.push({path: '/'})
     }
