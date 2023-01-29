@@ -103,6 +103,9 @@ export default {
   methods: {
     onTabClick(tab) {
       this.activeTab = tab;
+    },
+    getUserInfo() {
+
     }
   }
 }
