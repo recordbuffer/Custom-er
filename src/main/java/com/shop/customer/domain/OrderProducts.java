@@ -16,8 +16,8 @@ public class OrderProducts {
     private Long id;
 
     @ManyToOne
-    private Product product;
+    private Product productId;
 
     @ManyToOne
-    private Orders order;
+    private Orders orderId;
 }

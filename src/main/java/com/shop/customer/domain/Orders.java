@@ -1,6 +1,5 @@
 package com.shop.customer.domain;
 
-import com.shop.customer.Delivery;
 import com.shop.customer.domain.eums.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,9 +20,9 @@ public class Orders {
     @Enumerated(EnumType.STRING)
     private OrderStatus status = OrderStatus.ORDER;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "orderId")
     private List<OrderProducts> productsList = new ArrayList<>();
 
     @OneToOne
-    private Delivery delivery;
+    private Delivery deliveryId;
 }

@@ -1,4 +1,4 @@
-package com.shop.customer;
+package com.shop.customer.domain;
 
 import com.shop.customer.domain.Address;
 import com.shop.customer.domain.Orders;
@@ -23,7 +23,7 @@ public class Delivery {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status = DeliveryStatus.READY;
 
-    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "deliveryId", fetch = FetchType.LAZY)
     private Orders order;
 
 }
